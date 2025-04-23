@@ -7,7 +7,7 @@ plugins {
     signing
 }
 
-group = "app.revanced"
+group = "app.brosssh"
 
 tasks {
     processResources {
@@ -71,7 +71,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/revanced/revanced-patcher")
+            url = uri("https://maven.pkg.github.com/brosssh/revanced-patcher")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
@@ -98,15 +98,15 @@ publishing {
                 }
                 developers {
                     developer {
-                        id = "ReVanced"
-                        name = "ReVanced"
-                        email = "contact@revanced.app"
+                        id = "Brosssh"
+                        name = "Brosssh"
+                        email = ""
                     }
                 }
                 scm {
-                    connection = "scm:git:git://github.com/revanced/revanced-patcher.git"
-                    developerConnection = "scm:git:git@github.com:revanced/revanced-patcher.git"
-                    url = "https://github.com/revanced/revanced-patcher"
+                    connection = "scm:git:git://github.com/brosssh/revanced-patcher.git"
+                    developerConnection = "scm:git:git@github.com:brosssh/revanced-patcher.git"
+                    url = "https://github.com/brosssh/revanced-patcher"
                 }
             }
         }
