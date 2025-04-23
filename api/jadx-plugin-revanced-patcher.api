@@ -150,7 +150,7 @@ public final class app/revanced/patcher/patch/BytecodePatch : app/revanced/patch
 }
 
 public final class app/revanced/patcher/patch/BytecodePatchBuilder : app/revanced/patcher/patch/PatchBuilder {
-	public synthetic fun build$revanced_patcher ()Lapp/revanced/patcher/patch/Patch;
+	public synthetic fun build$jadx_plugin_revanced_patcher ()Lapp/revanced/patcher/patch/Patch;
 	public final fun extendWith (Ljava/lang/String;)Lapp/revanced/patcher/patch/BytecodePatchBuilder;
 	public final fun getExtensionInputStream ()Ljava/util/function/Supplier;
 	public final fun setExtensionInputStream (Ljava/util/function/Supplier;)V
@@ -386,7 +386,7 @@ public final class app/revanced/patcher/patch/RawResourcePatch : app/revanced/pa
 }
 
 public final class app/revanced/patcher/patch/RawResourcePatchBuilder : app/revanced/patcher/patch/PatchBuilder {
-	public synthetic fun build$revanced_patcher ()Lapp/revanced/patcher/patch/Patch;
+	public synthetic fun build$jadx_plugin_revanced_patcher ()Lapp/revanced/patcher/patch/Patch;
 }
 
 public final class app/revanced/patcher/patch/ResourcePatch : app/revanced/patcher/patch/Patch {
@@ -394,7 +394,7 @@ public final class app/revanced/patcher/patch/ResourcePatch : app/revanced/patch
 }
 
 public final class app/revanced/patcher/patch/ResourcePatchBuilder : app/revanced/patcher/patch/PatchBuilder {
-	public synthetic fun build$revanced_patcher ()Lapp/revanced/patcher/patch/Patch;
+	public synthetic fun build$jadx_plugin_revanced_patcher ()Lapp/revanced/patcher/patch/Patch;
 }
 
 public final class app/revanced/patcher/patch/ResourcePatchContext : app/revanced/patcher/patch/PatchContext {
