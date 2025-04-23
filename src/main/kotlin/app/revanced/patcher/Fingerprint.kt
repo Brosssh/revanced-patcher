@@ -47,7 +47,12 @@ class Fingerprint internal constructor(
     @Suppress("ktlint:standard:backing-property-naming")
     // Backing field needed for lazy initialization.
     private var _matchOrNull: Match? = null
-    private var _ignoreList: ArrayDeque<Method> = ArrayDeque()
+
+    var ignoreSet: Set<Method> = setOf()
+        set(ignoreSet) {
+            field = ignoreSet
+            _matchOrNull = null
+        }
 
     /**
      * The match for this [Fingerprint]. Null if unmatched.
@@ -78,9 +83,9 @@ class Fingerprint internal constructor(
         }?.minByOrNull { it.size }?.let { methodClasses ->
             methodClasses.forEach { (classDef, method) ->
                 val match = matchOrNull(classDef, method)
-                if (match != null && !this._ignoreList.any {
+                if (match != null && !this.ignoreSet.any {
                         match.method.name == it.name &&
-                                match.classDef.toString() == it.definingClass
+                        match.classDef.toString() == it.definingClass
                     })
                     return@let match
             }
@@ -175,7 +180,7 @@ class Fingerprint internal constructor(
         val stringMatches: List<Match.StringMatch>? =
             if (strings != null) {
                 buildList {
-                    if (method in _ignoreList) return null
+                    if (method in ignoreSet) return null
                     val instructions = method.instructionsOrNull ?: return null
 
                     val stringsList = strings.toMutableList()
@@ -203,7 +208,7 @@ class Fingerprint internal constructor(
             }
 
         val patternMatch = if (opcodes != null) {
-            if (method in _ignoreList) return null
+            if (method in ignoreSet) return null
             val instructions = method.instructionsOrNull ?: return null
 
             fun patternScan(): Match.PatternMatch? {
@@ -415,18 +420,6 @@ class Fingerprint internal constructor(
     context(BytecodePatchContext)
     val stringMatches
         get() = match.stringMatches
-
-    context(BytecodePatchContext)
-    fun addMethodToIgnore(match: Method) {
-        _ignoreList.add(match)
-        _matchOrNull = null
-    }
-
-    context(BytecodePatchContext)
-    fun popMethodFromIgnoreList() {
-        _ignoreList.removeLastOrNull()
-        _matchOrNull = null
-    }
 }
 
 /**
