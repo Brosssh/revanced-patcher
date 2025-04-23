@@ -7,7 +7,7 @@ plugins {
     signing
 }
 
-group = "app.revanced"
+group = "app.brosssh"
 
 tasks {
     processResources {
