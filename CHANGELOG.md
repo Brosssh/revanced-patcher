@@ -1,3 +1,10 @@
+# [1.0.0-dev.2](https://github.com/Brosssh/revanced-patcher/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2025-04-23)
+
+
+### Bug Fixes
+
+* Fix release URL ([2c5e743](https://github.com/Brosssh/revanced-patcher/commit/2c5e743801bdd76c786d44df030d1390cab888e8))
+
 # 1.0.0-dev.1 (2025-04-23)
 
 
