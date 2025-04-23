@@ -1,3 +1,10 @@
+# [1.1.0-dev.1](https://github.com/Brosssh/revanced-patcher/compare/v1.0.0...v1.1.0-dev.1) (2025-04-23)
+
+
+### Features
+
+* Ignore list can be set via ignoreList setter ([538e8f1](https://github.com/Brosssh/revanced-patcher/commit/538e8f12162c2b1d4e7435bb21dd9f5e4197df74))
+
 # 1.0.0 (2025-04-23)
 
 
