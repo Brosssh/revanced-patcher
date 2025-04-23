@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - dev
+      - jadx-revanced-plugin/dev
   workflow_dispatch:
 
 env:
