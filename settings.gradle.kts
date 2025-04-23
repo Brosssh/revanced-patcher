@@ -1,1 +1,1 @@
-rootProject.name = "revanced-patcher"
+rootProject.name = "jadx-plugin-revanced-patcher"
