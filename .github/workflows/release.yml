@@ -6,6 +6,8 @@ on:
     branches:
       - main
       - dev
+      - jadx-revanced-plugin/main
+      - jadx-revanced-plugin/dev
 
 jobs:
   release:
