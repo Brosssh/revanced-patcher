@@ -81,13 +81,10 @@ class Fingerprint internal constructor(
         var match = strings?.mapNotNull {
             lookupMaps.methodsByStrings[it]
         }?.minByOrNull { it.size }?.let { methodClasses ->
-            methodClasses.forEach { (classDef, method) ->
-                val match = matchOrNull(classDef, method)
-                if (match != null && !this.ignoreSet.any {
-                        match.method.name == it.name &&
-                        match.classDef.toString() == it.definingClass
-                    })
-                    return@let match
+            methodClasses.forEach { (method, classDef) ->
+                if (method in ignoreSet) return@forEach
+                val match = matchOrNull(method, classDef)
+                if (match != null) return@let match
             }
 
             null
@@ -115,6 +112,7 @@ class Fingerprint internal constructor(
         if (_matchOrNull != null) return _matchOrNull
 
         for (method in classDef.methods) {
+            if (method in ignoreSet) continue
             val match = matchOrNull(method, classDef)
             if (match != null) return match
         }
@@ -147,6 +145,7 @@ class Fingerprint internal constructor(
         classDef: ClassDef,
     ): Match? {
         if (_matchOrNull != null) return _matchOrNull
+        if (method in ignoreSet) return null
 
         if (returnType != null && !method.returnType.startsWith(returnType)) {
             return null
@@ -180,7 +179,6 @@ class Fingerprint internal constructor(
         val stringMatches: List<Match.StringMatch>? =
             if (strings != null) {
                 buildList {
-                    if (method in ignoreSet) return null
                     val instructions = method.instructionsOrNull ?: return null
 
                     val stringsList = strings.toMutableList()
@@ -208,7 +206,6 @@ class Fingerprint internal constructor(
             }
 
         val patternMatch = if (opcodes != null) {
-            if (method in ignoreSet) return null
             val instructions = method.instructionsOrNull ?: return null
 
             fun patternScan(): Match.PatternMatch? {
