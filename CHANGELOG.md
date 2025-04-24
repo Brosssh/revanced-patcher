@@ -1,3 +1,10 @@
+## [1.1.1-dev.1](https://github.com/Brosssh/revanced-patcher/compare/v1.1.0...v1.1.1-dev.1) (2025-04-24)
+
+
+### Bug Fixes
+
+* Fix ignore list behaviour on non-strings fingerprints ([40fba5d](https://github.com/Brosssh/revanced-patcher/commit/40fba5da5428dffa111d8449e2b0c6ed2b39f5be))
+
 # [1.1.0](https://github.com/Brosssh/revanced-patcher/compare/v1.0.0...v1.1.0) (2025-04-23)
 
 
