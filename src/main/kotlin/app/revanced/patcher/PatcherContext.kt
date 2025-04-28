@@ -13,9 +13,9 @@ import java.io.Closeable
  * @param config The configuration for the patcher.
  */
 @Suppress("MemberVisibilityCanBePrivate")
-class PatcherContext internal constructor(config: PatcherConfig): Closeable {
+class PatcherContext internal constructor(config: BaseConfig): Closeable {
     /**
-     * [PackageMetadata] of the supplied [PatcherConfig.apkFile].
+     * [PackageMetadata] of the supplied [BaseConfig.apkFile].
      */
     val packageMetadata = PackageMetadata(ApkInfo(ExtFile(config.apkFile)))
 

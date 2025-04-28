@@ -1,7 +1,7 @@
 package app.revanced.patcher.patch
 
 import app.revanced.patcher.InternalApi
-import app.revanced.patcher.PatcherConfig
+import app.revanced.patcher.BaseConfig
 import app.revanced.patcher.PatcherResult
 import app.revanced.patcher.extensions.InstructionExtensions.instructionsOrNull
 import app.revanced.patcher.util.ClassMerger.merge
@@ -28,16 +28,16 @@ import java.util.logging.Logger
 /**
  * A context for patches containing the current state of the bytecode.
  *
- * @param config The [PatcherConfig] used to create this context.
+ * @param config The [BaseConfig] used to create this context.
  */
 @Suppress("MemberVisibilityCanBePrivate")
-class BytecodePatchContext internal constructor(private val config: PatcherConfig) :
+class BytecodePatchContext internal constructor(private val config: BaseConfig) :
     PatchContext<Set<PatcherResult.PatchedDexFile>>,
     Closeable {
     private val logger = Logger.getLogger(this::javaClass.name)
 
     /**
-     * [Opcodes] of the supplied [PatcherConfig.apkFile].
+     * [Opcodes] of the supplied [BaseConfig.apkFile].
      */
     internal val opcodes: Opcodes
 

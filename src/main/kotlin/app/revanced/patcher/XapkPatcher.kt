@@ -4,14 +4,23 @@ import app.revanced.patcher.patch.*
 import kotlinx.coroutines.flow.flow
 import java.io.Closeable
 import java.util.logging.Logger
+import java.util.zip.ZipFile
 
 /**
  * A Patcher.
  *
  * @param config The configuration to use for the patcher.
  */
-class Patcher(private val config: PatcherConfig) : Closeable {
+class XapkPatcher(private val config: XapkPatcherConfig) : Closeable {
     private val logger = Logger.getLogger(this::class.java.name)
+    private val oldApk = config.apkFile
+
+    init {
+        config.initializeTemporaryFilesDirectories()
+
+        config.unzipXapk()
+        config.apkFile = config.xapkBaseApk
+    }
 
     /**
      * The context containing the current state of the patcher.
@@ -19,8 +28,9 @@ class Patcher(private val config: PatcherConfig) : Closeable {
     val context = PatcherContext(config)
 
     init {
-        config.initializeTemporaryFilesDirectories()
         context.resourceContext.decodeResources(ResourcePatchContext.ResourceMode.NONE)
+
+        config.apkFile = oldApk
     }
 
     /**

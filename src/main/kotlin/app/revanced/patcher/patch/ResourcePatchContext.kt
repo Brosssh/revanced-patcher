@@ -2,7 +2,7 @@ package app.revanced.patcher.patch
 
 import app.revanced.patcher.InternalApi
 import app.revanced.patcher.PackageMetadata
-import app.revanced.patcher.PatcherConfig
+import app.revanced.patcher.BaseConfig
 import app.revanced.patcher.PatcherResult
 import app.revanced.patcher.util.Document
 import brut.androlib.AaptInvoker
@@ -23,11 +23,11 @@ import java.util.logging.Logger
  * A context for patches containing the current state of resources.
  *
  * @param packageMetadata The [PackageMetadata] of the apk file.
- * @param config The [PatcherConfig] used to create this context.
+ * @param config The [BaseConfig] used to create this context.
  */
 class ResourcePatchContext internal constructor(
     private val packageMetadata: PackageMetadata,
-    private val config: PatcherConfig,
+    private val config: BaseConfig,
 ) : PatchContext<PatcherResult.PatchedResources?> {
     private val logger = Logger.getLogger(ResourcePatchContext::class.java.name)
 
@@ -37,23 +37,22 @@ class ResourcePatchContext internal constructor(
     fun document(inputStream: InputStream) = Document(inputStream)
 
     /**
-     * Read and write documents in the [PatcherConfig.apkFiles].
+     * Read and write documents in the [BaseConfig.apkFiles].
      */
     fun document(path: String) = Document(get(path))
 
     /**
-     * Set of resources from [PatcherConfig.apkFiles] to delete.
+     * Set of resources from [BaseConfig.apkFiles] to delete.
      */
     private val deleteResources = mutableSetOf<String>()
 
     /**
-     * Decode resources of [PatcherConfig.apkFile].
+     * Decode resources of [BaseConfig.apkFile].
      *
      * @param mode The [ResourceMode] to use.
      */
     internal fun decodeResources(mode: ResourceMode) =
         with(packageMetadata.apkInfo) {
-            config.initializeTemporaryFilesDirectories()
 
             // Needed to decode resources.
             val resourcesDecoder = ResourcesDecoder(config.resourceConfig, this)
@@ -111,7 +110,7 @@ class ResourcePatchContext internal constructor(
         }
 
     /**
-     * Compile resources in [PatcherConfig.apkFiles].
+     * Compile resources in [BaseConfig.apkFiles].
      *
      * @return The [PatcherResult.PatchedResources].
      */
@@ -187,10 +186,10 @@ class ResourcePatchContext internal constructor(
     }
 
     /**
-     * Get a file from [PatcherConfig.apkFiles].
+     * Get a file from [BaseConfig.apkFiles].
      *
      * @param path The path of the file.
-     * @param copy Whether to copy the file from [PatcherConfig.apkFile] if it does not exist yet in [PatcherConfig.apkFiles].
+     * @param copy Whether to copy the file from [BaseConfig.apkFile] if it does not exist yet in [BaseConfig.apkFiles].
      */
     operator fun get(
         path: String,
