@@ -16,8 +16,8 @@ import java.util.logging.Logger
 abstract class BaseConfig(
     var apkFile: File,
     val temporaryFilesPath: File,
-    aaptBinaryPath: String?,
-    frameworkFileDirectory: String?,
+    val aaptBinaryPath: String?,
+    val frameworkFileDirectory: String?,
 ) {
     internal val logger = Logger.getLogger(BaseConfig::class.java.name)
 
@@ -66,4 +66,6 @@ abstract class BaseConfig(
         apkFiles.mkdirs()
         patchedFiles.mkdirs()
     }
+
+    abstract fun initialize()
 }

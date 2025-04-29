@@ -16,16 +16,15 @@ class XapkPatcher(private val config: XapkPatcherConfig) : Closeable {
     private val oldApk = config.apkFile
 
     init {
-        config.initializeTemporaryFilesDirectories()
+        config.initialize()
 
-        config.unzipXapk()
-        config.apkFile = config.xapkBaseApk
+        config.apkFile = config.baseApkFile
     }
 
     /**
      * The context containing the current state of the patcher.
      */
-    val context = PatcherContext(config)
+    val context = XapkPatcherContext(config)
 
     init {
         context.resourceContext.decodeResources(ResourcePatchContext.ResourceMode.NONE)

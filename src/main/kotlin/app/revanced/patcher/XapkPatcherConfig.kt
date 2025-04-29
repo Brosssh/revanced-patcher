@@ -19,25 +19,13 @@ class XapkPatcherConfig(
     temporaryFilesPath: File = File("revanced-temporary-files"),
     aaptBinaryPath: String? = null,
     frameworkFileDirectory: String? = null,
+    internal val baseApkFile: File,
+    internal val splitsApkFiles: Set<File>
 ) : BaseConfig(apkFile, temporaryFilesPath, aaptBinaryPath, frameworkFileDirectory) {
-    internal val isXapk = true
     internal val xapkTemporaryFiles = temporaryFilesPath.resolve("xapk")
-    public val xapkBaseApk = xapkTemporaryFiles.resolve("com.spotify.music.apk") //TODO
 
-    internal fun unzipXapk() {
-        logger.info("Unzipping Xapk")
-
+    override fun initialize() {
+        initializeTemporaryFilesDirectories()
         xapkTemporaryFiles.mkdirs()
-
-        ZipFile(apkFile).use { zip ->
-            zip.entries().asSequence().forEach { entry ->
-                val outFile = File(xapkTemporaryFiles, entry.name)
-                zip.getInputStream(entry).use { input ->
-                    outFile.outputStream().use { output ->
-                        input.copyTo(output)
-                    }
-                }
-            }
-        }
     }
 }

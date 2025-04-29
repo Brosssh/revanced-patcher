@@ -21,4 +21,8 @@ open class PatcherConfig(
     val xapkBaseApk: File? = null
 ) : BaseConfig(apkFile, temporaryFilesPath, aaptBinaryPath, frameworkFileDirectory) {
 
+    override fun initialize() {
+        initializeTemporaryFilesDirectories()
+    }
+
 }

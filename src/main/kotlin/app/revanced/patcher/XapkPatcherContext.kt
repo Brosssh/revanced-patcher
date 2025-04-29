@@ -13,11 +13,13 @@ import java.io.Closeable
  * @param config The configuration for the patcher.
  */
 @Suppress("MemberVisibilityCanBePrivate")
-class   PatcherContext internal constructor(config: BaseConfig): Closeable {
+class XapkPatcherContext internal constructor(config: XapkPatcherConfig): Closeable {
     /**
      * [PackageMetadata] of the supplied [BaseConfig.apkFile].
      */
-    val packageMetadata = PackageMetadata(ApkInfo(ExtFile(config.apkFile)))
+    val packageMetadata = PackageMetadata(ApkInfo(ExtFile(config.baseApkFile)))
+
+    val archApkFile = config.splitsApkFiles.find { it.name.contains("arm64") } //TODO
 
     /**
      * The set of [Patch]es.
@@ -32,12 +34,22 @@ class   PatcherContext internal constructor(config: BaseConfig): Closeable {
     /**
      * The context for patches containing the current state of the resources.
      */
+    init {
+        config.apkFile = archApkFile!!
+    }
     internal val resourceContext = ResourcePatchContext(packageMetadata, config)
 
     /**
      * The context for patches containing the current state of the bytecode.
      */
+    init {
+        config.apkFile = config.baseApkFile
+    }
     internal val bytecodeContext = BytecodePatchContext(config)
+
+    init {
+        config.apkFile = config.baseApkFile
+    }
 
     override fun close() = bytecodeContext.close()
 }
